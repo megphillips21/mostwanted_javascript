@@ -16,8 +16,6 @@
  * @param {Array} people        A collection of person objects.
  */
 function app(people) {
-    // promptFor() is a custom function defined below that helps us prompt and validate input more easily
-    // Note that we are chaining the .toLowerCase() immediately after the promptFor returns its value
     let searchType = promptFor(
         "Do you know the name of the person you are looking for? Enter 'yes' or 'no'",
         yesNo
@@ -72,13 +70,13 @@ function mainMenu(person, people) {
         case "family":
             //! TODO #2: Declare a findPersonFamily function //////////////////////////////////////////
             // HINT: Look for a people-collection stringifier utility function to help
-            let personFamily = findPersonFamily(person[0], people);
+            let personFamily = displayFamily(person[0], people);
             alert(personFamily);
             break;
         case "descendants":
             //! TODO #3: Declare a findPersonDescendants function //////////////////////////////////////////
             // HINT: Review recursion lecture + demo for bonus user story
-            let personDescendants = findPersonDescendants(person[0], people);
+            let personDescendants = displayPersonDescendants(person[0], people);
             alert(personDescendants);
             break;
         case "restart":
@@ -138,18 +136,28 @@ function displayPeople(people) {
  * @param {Object} person       A singular object.
  */
 function displayPerson(person) {
+    // let heightInches = person[0].height
+    // let heightFeet = Math.round((heightInches / 12) * 10) / 1
     let personInfo = `First Name: ${person.firstName}\n`;
     personInfo += `Last Name: ${person.lastName}\n`;
     personInfo += `Gender: ${person.gender}\n`;
     personInfo += `Date of Birth: ${person.dob}\n`;
-    personInfo += `Height: ${person.height}\n`;
-    personInfo += `Weight: ${person.weight}\n`;
+    personInfo += `Height:${person.height} + "Inches"\n`;
+    personInfo += `Weight: ${person.wight}+"lbs" + "\n`;
     personInfo += `Eye Color: ${person.eyeColor}\n`;
     personInfo += `Occupation: ${person.occupation}\n`;
-    personInfo += `Parents: ${person.parents}\n`;
-    personInfo += `Current Spouse: ${person.currentSpouse}\n`;
-    //! TODO #1a: finish getting the rest of the information to display //////////////////////////////////////////
+    
     alert(personInfo);
+}
+
+function displayFamily(person){
+    let personFamily = `Parents: ${person.parents}\n`;
+        personFamily += `Current Spouse: ${person.currentSpouse}\n`;
+    alert(personFamily);
+}
+
+function displayPersonDescendants(person){
+    let personDescendants = `Decendents: `
 }
 // End of displayPerson()
 
