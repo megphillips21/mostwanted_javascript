@@ -41,6 +41,74 @@ function app(people) {
 }
 // End of app()
 
+//Find person by one trait
+function findPeopleByTraits(people){
+    let traitGroup = [];
+    let traitSearch = prompt('What trait would you like to filter people by?  You can select "ID Number", "Gender", "Date of Birth", "Height", "Weight", "Eye Color" "Occupation", "Parents", or "Spouse".  You can also search for multiple traits at a time by typing "multiple".')
+    switch(traitSearch.toLowerCase()){
+        case "id":
+        case "id number":
+        case "id #":
+          traitGroup =searchUsersByID(people);
+          narrowDownTraitGroup(traitGroup);
+          break;
+        case "name":
+        case "first name":
+        case "first":
+          traitGroup = searchUsersByFirstName(people);
+          narrowDownTraitGroup(traitGroup);
+          break;
+        case "last name":
+        case "family name":
+        case "surname":
+          traitGroup = searchUsersByLastName(people);
+          narrowDownTraitGroup(traitGroup);
+          break;
+        case "gender":
+        case "sex":
+          traitGroup = searchUsersByGender(people);
+          narrowDownTraitGroup(traitGroup);
+          break;
+        case "date of birth":
+        case "dob":
+          traitGroup = searchUsersByDOB(people);
+          narrowDownTraitGroup(traitGroup);
+          break;
+        case "height":
+          traitGroup = searchUsersByHeight(people);
+          narrowDownTraitGroup(traitGroup);
+          break;
+        case "weight":
+        case "lbs":
+          traitGroup = searchUsersByWeight(people);
+          narrowDownTraitGroup(traitGroup);
+          break;
+        case "eye color":
+        case "eyes":
+          traitGroup = searchByEyeColor(people);
+          narrowDownTraitGroup(traitGroup);
+          break;
+        case "occupation":
+        case "job":
+        case "profession":
+          traitGroup = searchByOccupation(people);
+          narrowDownTraitGroup(traitGroup);
+          break;
+        case "parents":
+          traitGroup = searchByParents(people);
+          narrowDownTraitGroup(traitGroup);
+          break;
+        case "spouse":
+        case "married":
+          traitGroup = searchByCurrentSpouse(people);
+          narrowDownTraitGroup(traitGroup);
+          break;
+        case "multiple":
+          searchByMultipleTraits(people);
+          break;
+    }
+  }
+
 /**
  * After finding a single person, we pass in the entire person-object that we found,
  * as well as the entire original dataset of people. We need people in order to find
@@ -62,14 +130,10 @@ function mainMenu(person, people) {
     // Routes our application based on the user's input
     switch (displayOption) {
         case "info":
-            //! TODO #1: Utilize the displayPerson function //////////////////////////////////////////
-            // HINT: Look for a person-object stringifier utility function to help
             let personInfo = displayPerson(person[0]);
             alert(personInfo);
             break;
         case "family":
-            //! TODO #2: Declare a findPersonFamily function //////////////////////////////////////////
-            // HINT: Look for a people-collection stringifier utility function to help
             let personFamily = displayFamily(person[0], people);
             alert(personFamily);
             break;
@@ -136,8 +200,6 @@ function displayPeople(people) {
  * @param {Object} person       A singular object.
  */
 function displayPerson(person) {
-    // let heightInches = person[0].height
-    // let heightFeet = Math.round((heightInches / 12) * 10) / 1
     let personInfo = `First Name: ${person.firstName}\n`;
     personInfo += `Last Name: ${person.lastName}\n`;
     personInfo += `Gender: ${person.gender}\n`;
