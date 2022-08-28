@@ -49,49 +49,49 @@ function findPeopleByTraits(people){
         case "id":
         case "id number":
         case "id #":
-          traitGroup =searchUsersByID(people);
+          traitGroup =searchByID(people);
           narrowDownTraitGroup(traitGroup);
           break;
         case "name":
         case "first name":
         case "first":
-          traitGroup = searchUsersByFirstName(people);
+          traitGroup = searchByFirstName(people);
           narrowDownTraitGroup(traitGroup);
           break;
         case "last name":
         case "family name":
         case "surname":
-          traitGroup = searchUsersByLastName(people);
+          traitGroup = searchByLastName(people);
           narrowDownTraitGroup(traitGroup);
           break;
         case "gender":
         case "sex":
-          traitGroup = searchUsersByGender(people);
+          traitGroup = searchByGender(people);
           narrowDownTraitGroup(traitGroup);
           break;
         case "date of birth":
         case "dob":
-          traitGroup = searchUsersByDOB(people);
+          traitGroup = searchByBirthdate(people);
           narrowDownTraitGroup(traitGroup);
           break;
         case "height":
-          traitGroup = searchUsersByHeight(people);
+          traitGroup = searchByHeight(people);
           narrowDownTraitGroup(traitGroup);
           break;
         case "weight":
         case "lbs":
-          traitGroup = searchUsersByWeight(people);
+          traitGroup = searchByWeight(people);
           narrowDownTraitGroup(traitGroup);
           break;
         case "eye color":
         case "eyes":
-          traitGroup = searchByEyeColor(people);
+          traitGroup = searchByEyes(people);
           narrowDownTraitGroup(traitGroup);
           break;
         case "occupation":
         case "job":
         case "profession":
-          traitGroup = searchByOccupation(people);
+          traitGroup = searchByJob(people);
           narrowDownTraitGroup(traitGroup);
           break;
         case "parents":
@@ -100,7 +100,7 @@ function findPeopleByTraits(people){
           break;
         case "spouse":
         case "married":
-          traitGroup = searchByCurrentSpouse(people);
+          traitGroup = searchBySpouse(people);
           narrowDownTraitGroup(traitGroup);
           break;
         case "multiple":
@@ -157,7 +157,7 @@ function mainMenu(person, people) {
 }
 // End of mainMenu()
 
-/**
+/**Search Functions
  * This function is used when searching the people collection by
  * a person-object's firstName and lastName properties.
  * @param {Array} people        A collection of person objects.
@@ -176,6 +176,55 @@ function searchByName(people) {
     return foundPerson;
 }
 // End of searchByName()
+
+// Search by ID 
+function searchByID(people){
+    let userInput = promptFor("Search by 9 digit ID number, enter the numerical ID below.", idNumber)
+    if(userInput.toLowerCase() === "exit"){
+      return;
+    }
+    let peopleByID = [];
+    peopleByID = people.filter(function(people){
+        if(people.id == userInput){
+            return peopleByID;
+        }
+    })
+    let traitGroup = peopleByID;
+    displayPeople(traitGroup);
+    return traitGroup;
+}
+
+// Search by first OR last name:
+function searchByFirstName(people){
+    let userInput = promptFor("Please enter person's First Name. *Name must stat with capital letter*", autoValid)
+    if(userInput.toLowerCase() === "exit"){
+      return;
+    }
+    let peopleByFirstName = [];
+    peopleByFirstName = people.filter(function(people){
+        if(people.firstName == userInput){
+            return peopleByFirstName;
+        }
+    })
+    let traitGroup = peopleByFirstName;
+    displayPeople(traitGroup);
+    return traitGroup;
+  }
+  function searchByLastName(people){
+    let userInput = promptFor("Please enter person'd Last Name. *Name must start with capital letter*", autoValid)
+    if(userInput.toLowerCase() === "exit"){
+      return;
+    }
+    let peopleByLastName = [];
+    peopleByLastName = people.filter(function(people){
+        if(people.lastName == userInput){
+            return peopleByLastName;
+        }
+    })
+    let traitGroup = peopleByLastName;
+    displayPeople(traitGroup);
+    return traitGroup;
+  }
 
 /**
  * This function will be useful for STRINGIFYING a collection of person-objects
