@@ -225,6 +225,35 @@ function searchByFirstName(people){
     displayPeople(traitGroup);
     return traitGroup;
   }
+// Search by either gender
+function searchByGender(people){
+    let userInput = promptFor("Enter a gender.", maleFemale);
+    if(userInput.toLowerCase === "exit"){
+      return;
+    }
+    if(userInput.toLowerCase() === "male"){
+        let men = [];
+        men = people.filter(function(people){
+            if(people.gender === userInput){
+                return men;
+            }
+        })
+        let traitGroup = men;
+        return traitGroup;
+    } 
+    else if(userInput.toLowerCase() === "female"){
+      let women = [];
+      women = people.filter(function(people){
+          if(people.gender === userInput){
+              return women;
+          }
+      })
+      let traitGroup = women;
+      displayPeople(traitGroup);
+      return(traitGroup);
+    }
+
+
 
 /**
  * This function will be useful for STRINGIFYING a collection of person-objects
