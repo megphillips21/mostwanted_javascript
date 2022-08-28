@@ -42,7 +42,7 @@ function app(people) {
 // End of app()
 
 //Find person by one trait
-function findPeopleByTraits(people){
+function searchByTraits(people){
     let traitGroup = [];
     let traitSearch = prompt('What trait would you like to filter people by?  You can select "ID Number", "Gender", "Date of Birth", "Height", "Weight", "Eye Color" "Occupation", "Parents", or "Spouse".  You can also search for multiple traits at a time by typing "multiple".')
     switch(traitSearch.toLowerCase()){
@@ -252,7 +252,7 @@ function searchByGender(people){
       displayPeople(traitGroup);
       return(traitGroup);
     }
-
+}
 
 
 /**
@@ -300,6 +300,17 @@ function displayPersonDescendants(person){
     let personDescendants = `Decendents: `
 }
 // End of displayPerson()
+
+
+//data validation functions-
+function idNumber(input){
+    if(input.length === 9||input.toLowerCase() == 'exit'){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
 
 /**
  * This function's purpose is twofold:
