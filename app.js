@@ -207,7 +207,7 @@ function filterTraits(peopleTraits, people) {
         filteredPeople = searchByWeight(people);
     }
     if (peopleTraitOne === "eyeColor") {
-        filteredPeople = searchEyeColor(people);
+        filteredPeople = searchByEyes(people);
     }
     if (peopleTraitOne === "occupation") {
         filteredPeople = searchByOccupation(people);
