@@ -78,58 +78,58 @@ function searchByTraits(people) {
         case "id number":
         case "id #":
             traitGroup = searchByID(people);
-            narrowDownTraitGroup(traitGroup);
+            filterTraitGroup(traitGroup);
             break;
         case "name":
         case "first name":
         case "first":
             traitGroup = searchByFirstName(people);
-            narrowDownTraitGroup(traitGroup);
+            filterTraitGroup(traitGroup);
             break;
         case "last name":
         case "family name":
         case "surname":
             traitGroup = searchByLastName(people);
-            narrowDownTraitGroup(traitGroup);
+            filterTraitGroup(traitGroup);
             break;
         case "gender":
         case "sex":
             traitGroup = searchByGender(people);
-            narrowDownTraitGroup(traitGroup);
+            filterTraitGroup(traitGroup);
             break;
         case "date of birth":
         case "dob":
             traitGroup = searchByBirthdate(people);
-            narrowDownTraitGroup(traitGroup);
+            filterTraitGroup(traitGroup);
             break;
         case "height":
             traitGroup = searchByHeight(people);
-            narrowDownTraitGroup(traitGroup);
+            filterTraitGroup(traitGroup);
             break;
         case "weight":
         case "lbs":
             traitGroup = searchByWeight(people);
-            narrowDownTraitGroup(traitGroup);
+            filterTraitGroup(traitGroup);
             break;
         case "eye color":
         case "eyes":
             traitGroup = searchByEyes(people);
-            narrowDownTraitGroup(traitGroup);
+            filterTraitGroup(traitGroup);
             break;
         case "occupation":
         case "job":
         case "profession":
             traitGroup = searchByJob(people);
-            narrowDownTraitGroup(traitGroup);
+            filterTraitGroup(traitGroup);
             break;
         case "parents":
             traitGroup = searchByParents(people);
-            narrowDownTraitGroup(traitGroup);
+            filterTraitGroup(traitGroup);
             break;
         case "spouse":
         case "married":
             traitGroup = searchBySpouse(people);
-            narrowDownTraitGroup(traitGroup);
+            filterTraitGroup(traitGroup);
             break;
         case "multiple":
             searchByMultipleTraits(people);
@@ -158,6 +158,7 @@ function searchByMultipleTraits(people) {
         }
 
     }
+    if (filteredPeople.length > 0) filterTraitGroup(filteredPeople); 
 }
 
 function pickNumberOfTraits(numberOfTraits) {
@@ -176,6 +177,7 @@ function multipleTraitInput(peopleTraits, numberOfTraits) {
 }
 function pickTraits(peopleTraits) {
     let peopletrait = promptFor('Please enter a trait from the following:\n"id"\n"first name"\n"last name"\n"gender"\n"dob"\n"weight"\n"eye color"\n"occupation"\n"has parents"\n"has spouse"', multipleTraitsValid)
+    peopletrait = changeInputToValidTrait(peopletrait)
     peopleTraits.push(peopletrait);
     return peopleTraits
 }
@@ -218,7 +220,7 @@ function filterTraits(peopleTraits, people) {
     }
     return filteredPeople;
 }
-}
+
 /**
  * After finding a single person, we pass in the entire person-object that we found,
  * as well as the entire original dataset of people. We need people in order to find
@@ -325,7 +327,140 @@ function searchByGender(people) {
         return (traitGroup);
     }
 }
-
+// Search for birthdate 
+function searchByBirthdate(people) {
+    let userInput = promptFor("Please enter person's birthdate in the format of month/day/year.", autoValid);
+    if (userInput.toLowerCase() === "exit") {
+      return;
+    }
+    let peopleByDOB = [];
+    peopleByDOB = people.filter(function (people) {
+      if (people.dob == userInput) {
+        return peopleByDOB;
+      }
+    })
+    let traitGroup = peopleByDOB;
+    displayPeople(traitGroup);
+    return (traitGroup);
+  }
+  // search by height
+  function searchByHeight(people) {
+    let userInput = promptFor("Enter person's height in inches.", height)
+    if (userInput.toLowerCase() === "exit") {
+      return;
+    }
+    let peopleByHeight = [];
+    peopleByHeight = people.filter(function (people) {
+      if (people.height == userInput) {
+        return peopleByHeight;
+      }
+    })
+    let traitGroup = peopleByHeight;
+    displayPeople(traitGroup);
+    return (traitGroup);
+  }
+  //search by weight
+  function searchByWeight(people) {
+    let userInput = promptFor("Enter person's weight in pounds.", weight)
+    if (userInput.toLowerCase === "exit") {
+      return;
+    }
+    let peopleByWeight = [];
+    peopleByWeight = people.filter(function (people) {
+      if (people.weight == userInput) {
+        return peopleByWeight;
+      }
+    })
+    let traitGroup = peopleByWeight;
+    displayPeople(traitGroup)
+    return traitGroup;
+  }
+  // search by eye color
+  function searchByEyes(people) {
+    let userInput = promptFor("Enter person's eye color.", eyeColorValid)
+    if (userInput.toLocaleLowerCase === "exit") {
+      return;
+    }
+    let eyeColor = [];
+    eyeColor = people.filter(function (people) {
+      if (people.eyeColor === userInput) {
+        return eyeColor;
+      }
+    })
+    let traitGroup = eyeColor;
+    displayPeople(traitGroup);
+    return (traitGroup);
+  }
+  //search by job
+  function searchByJob(people) {
+    let userInput = promptFor("Enter person's occupation.", occupation);
+    if (userInput.toLowerCase() === "assistant", "landscaper", "nurse", "programmer", "student", "architect", "doctor", "politician") {
+      if (userInput.toLowerCase === "exit") {
+        return;
+      }
+      let occupation = [];
+      occupation = people.filter(function (people) {
+        if (people.occupation === userInput) {
+          return occupation;
+        }
+      })
+      let traitGroup = occupation;
+      displayPeople(traitGroup);
+      return (traitGroup);
+    }
+  }
+  //search by parents
+  function searchByParents(people) {
+    let userInput = promptFor("Does the person have a parent?", yesNo)
+    if (userInput.toLowerCase() === "yes") {
+      let hasParents = [];
+      hasParents = people.filter(function (people) {
+        if (people.parents.length > 0) {
+          return hasParents;
+        }
+      })
+      let traitGroup = hasParents;
+      displayPeople(traitGroup);
+      return (traitGroup);
+    }
+    if (userInput.toLowerCase() === "no") {
+      let hasParents = [];
+      hasParents = people.filter(function (people) {
+        if (people.parents.length == 0) {
+          return hasParents;
+        }
+      })
+      let traitGroup = hasParents;
+      displayPeople(traitGroup);
+      return (traitGroup);
+    }
+  }
+// search by spouse
+  function searchBySpouse(people) {
+    let userInput = promptFor("Does the person have a current spouse?", yesNo)
+    if (userInput.toLowerCase() === "yes") {
+      let hasSpouse = [];
+      hasSpouse = people.filter(function (people) {
+        if (people.currentSpouse > 0) {
+          return hasSpouse;
+        }
+      })
+      let traitGroup = hasSpouse;
+      displayPeople(traitGroup);
+      return (traitGroup);
+    }
+    if (userInput.toLowerCase() === "no") {
+      let doesNotHaveSpouse = [];
+      doesNotHaveSpouse = people.filter(function (people) {
+        if (people.currentSpouse === null) {
+          return doesNotHaveSpouse;
+        }
+      })
+      let traitGroup = doesNotHaveSpouse;
+      displayPeople(traitGroup);
+      return (traitGroup);
+    }
+  }
 
 /**
  * This function will be useful for STRINGIFYING a collection of person-objects
@@ -399,7 +534,99 @@ function multipleTraitsValid(input) {
         return false;
     }
 }
-
+function maleFemale(input) {
+    if (input.toLowerCase() == "male" || input.toLowerCase() == "female") {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+  function occupation(input) {
+    if (input.toLowerCase() == "nurse" || input.toLowerCase() == "doctor" || input.toLowerCase() == "landscaper" || input.toLowerCase() == "assistant" || input.toLowerCase() == "programmer" || input.toLowerCase() == "politician" || input.toLowerCase() == "architect" || input.toLowerCase() == "exit") {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+  function eyeColorValid(input) {
+    if (input.toLowerCase() == "blue" || input.toLowerCase() == "green" || input.toLowerCase() == "hazel" || input.toLowerCase() == "black" || input.toLowerCase() == "brown" || input.toLowerCase() == "exit") {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+  function height(input) {
+    if (input >= 58 && input <= 76 || input.toLowerCase() == "exit") {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+  function weight(input) {
+    if (input >= 100 && input <= 256 || input.toLowerCase() == "exit") {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+  function changeInputToValidTrait(userTrait) {
+    switch (userTrait.toLowerCase()) {
+      case "id":
+      case "id number":
+      case "id #":
+        userTrait = "id";
+        return userTrait;
+      case "first name":
+      case "first":
+      case "name":
+        userTrait = "firstName";
+        return userTrait;
+      case "last name":
+      case "surname":
+      case "family name":
+        userTrait = "lastName"
+        return userTrait;
+      case "gender":
+      case "sex":
+        userTrait = "gender";
+        return userTrait;
+      case "date of birth":
+      case "dob":
+      case "birthday":
+        userTrait = "dob";
+        return userTrait;
+      case "height":
+        userTrait = "height";
+        return userTrait;
+      case "weight":
+      case "lbs":
+        userTrait = "weight"
+        return userTrait;
+      case "eye color":
+      case "eyes":
+      case "color":
+        userTrait = "eyeColor";
+        return userTrait;
+      case "occupation":
+      case "job":
+      case "profession":
+        userTrait = "occupation";
+        return userTrait;
+      case "parents":
+      case "has parents":
+        userTrait = "parents"
+        return userTrait;
+      case "spouse":
+      case "married":
+        userTrait = "currentSpouse"
+        return userTrait;
+    }
+  }
 /**
  * This function's purpose is twofold:
  * First, to generate a prompt with the value passed in to the question parameter.
@@ -437,5 +664,3 @@ function chars(input) {
 }
 // End of chars()
 
-//////////////////////////////////////////* End Of Starter Code *//////////////////////////////////////////
-// Any additional functions can be written below this line 👇. Happy Coding! 😁
