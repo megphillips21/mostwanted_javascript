@@ -5,16 +5,7 @@
 //////////////////////////////////////////* Beginning Of Starter Code *//////////////////////////////////////////
 
 "use strict";
-//? Utilize the hotkey to hide block level comment documentation
-////* Mac: Press "CMD"+"K" and then "CMD"+"/"
-////* PC: Press "CTRL"+"K" and then "CTRL"+"/"
 
-/**
- * This is the main logic function being called in index.html.
- * It operates as the entry point for our entire application and allows
- * our user to decide whether to search by name or by traits.
- * @param {Array} people        A collection of person objects.
- */
 function app(people) {
     let searchType = promptFor(
         "Do you know the name of the person you are looking for? Enter 'yes' or 'no'",
@@ -27,8 +18,7 @@ function app(people) {
             searchResults = searchByName(people);
             break;
         case "no":
-            //! TODO #4: Declare a searchByTraits (multiple traits) function //////////////////////////////////////////
-                //! TODO #4a: Provide option to search for single or multiple //////////////////////////////////////////
+
             searchResults = searchByTraits(people);
             break;
         default:
@@ -40,83 +30,6 @@ function app(people) {
     mainMenu(searchResults, people);
 }
 // End of app()
-
-//Find person by one trait
-function searchByTraits(people){
-    let traitGroup = [];
-    let traitSearch = prompt('What trait would you like to filter people by?  You can select "ID Number", "Gender", "Date of Birth", "Height", "Weight", "Eye Color" "Occupation", "Parents", or "Spouse".  You can also search for multiple traits at a time by typing "multiple".')
-    switch(traitSearch.toLowerCase()){
-        case "id":
-        case "id number":
-        case "id #":
-          traitGroup =searchByID(people);
-          narrowDownTraitGroup(traitGroup);
-          break;
-        case "name":
-        case "first name":
-        case "first":
-          traitGroup = searchByFirstName(people);
-          narrowDownTraitGroup(traitGroup);
-          break;
-        case "last name":
-        case "family name":
-        case "surname":
-          traitGroup = searchByLastName(people);
-          narrowDownTraitGroup(traitGroup);
-          break;
-        case "gender":
-        case "sex":
-          traitGroup = searchByGender(people);
-          narrowDownTraitGroup(traitGroup);
-          break;
-        case "date of birth":
-        case "dob":
-          traitGroup = searchByBirthdate(people);
-          narrowDownTraitGroup(traitGroup);
-          break;
-        case "height":
-          traitGroup = searchByHeight(people);
-          narrowDownTraitGroup(traitGroup);
-          break;
-        case "weight":
-        case "lbs":
-          traitGroup = searchByWeight(people);
-          narrowDownTraitGroup(traitGroup);
-          break;
-        case "eye color":
-        case "eyes":
-          traitGroup = searchByEyes(people);
-          narrowDownTraitGroup(traitGroup);
-          break;
-        case "occupation":
-        case "job":
-        case "profession":
-          traitGroup = searchByJob(people);
-          narrowDownTraitGroup(traitGroup);
-          break;
-        case "parents":
-          traitGroup = searchByParents(people);
-          narrowDownTraitGroup(traitGroup);
-          break;
-        case "spouse":
-        case "married":
-          traitGroup = searchBySpouse(people);
-          narrowDownTraitGroup(traitGroup);
-          break;
-        case "multiple":
-          searchByMultipleTraits(people);
-          break;
-    }
-  }
-
-/**
- * After finding a single person, we pass in the entire person-object that we found,
- * as well as the entire original dataset of people. We need people in order to find
- * descendants and other information that the user may want.
- * @param {Object[]} person     A singular object inside of an array.
- * @param {Array} people        A collection of person objects.
- * @returns {String}            The valid string input retrieved from the user.
- */
 function mainMenu(person, people) {
     // A check to verify a person was found via searchByName() or searchByTrait()
     if (!person[0]) {
@@ -156,6 +69,106 @@ function mainMenu(person, people) {
     }
 }
 // End of mainMenu()
+//Find person by one trait
+function searchByTraits(people) {
+    let traitGroup = [];
+    let traitSearch = prompt('What trait would you like to filter people by?  You can select "ID Number", "Gender", "Date of Birth", "Height", "Weight", "Eye Color" "Occupation", "Parents", or "Spouse".  You can also search for multiple traits at a time by typing "multiple".')
+    switch (traitSearch.toLowerCase()) {
+        case "id":
+        case "id number":
+        case "id #":
+            traitGroup = searchByID(people);
+            narrowDownTraitGroup(traitGroup);
+            break;
+        case "name":
+        case "first name":
+        case "first":
+            traitGroup = searchByFirstName(people);
+            narrowDownTraitGroup(traitGroup);
+            break;
+        case "last name":
+        case "family name":
+        case "surname":
+            traitGroup = searchByLastName(people);
+            narrowDownTraitGroup(traitGroup);
+            break;
+        case "gender":
+        case "sex":
+            traitGroup = searchByGender(people);
+            narrowDownTraitGroup(traitGroup);
+            break;
+        case "date of birth":
+        case "dob":
+            traitGroup = searchByBirthdate(people);
+            narrowDownTraitGroup(traitGroup);
+            break;
+        case "height":
+            traitGroup = searchByHeight(people);
+            narrowDownTraitGroup(traitGroup);
+            break;
+        case "weight":
+        case "lbs":
+            traitGroup = searchByWeight(people);
+            narrowDownTraitGroup(traitGroup);
+            break;
+        case "eye color":
+        case "eyes":
+            traitGroup = searchByEyes(people);
+            narrowDownTraitGroup(traitGroup);
+            break;
+        case "occupation":
+        case "job":
+        case "profession":
+            traitGroup = searchByJob(people);
+            narrowDownTraitGroup(traitGroup);
+            break;
+        case "parents":
+            traitGroup = searchByParents(people);
+            narrowDownTraitGroup(traitGroup);
+            break;
+        case "spouse":
+        case "married":
+            traitGroup = searchBySpouse(people);
+            narrowDownTraitGroup(traitGroup);
+            break;
+        case "multiple":
+            searchByMultipleTraits(people);
+            break;
+    }
+}
+//Multiple trait search function-
+function searchByMultipleTraits(people) {
+    let numberOfTraits;
+    let peopleTraits = [];
+    let filteredPeople = [];
+    numberOfTraits = pickNumberOfTraits(numberOfTraits);
+    multipleTraitInput(peopleTraits, numberOfTraits);
+    while (peopleTraits.length > 0) {
+        filteredPeople = filterTraits(peopleTraits, people);
+        if (filteredPeople.length === 1) {
+            alert('Search has found one person.');
+            let person = filteredPeople;
+            mainMenu(person, people);
+            return;
+        }
+        else if (filteredPeople.length == 0){
+            alert('No person(s) found. Try again.')
+            app(people);
+            return;
+        }
+
+    }
+}
+
+/**
+ * After finding a single person, we pass in the entire person-object that we found,
+ * as well as the entire original dataset of people. We need people in order to find
+ * descendants and other information that the user may want.
+ * @param {Object[]} person     A singular object inside of an array.
+ * @param {Array} people        A collection of person objects.
+ * @returns {String}            The valid string input retrieved from the user.
+ */
+
 
 /**Search Functions
  * This function is used when searching the people collection by
@@ -178,14 +191,14 @@ function searchByName(people) {
 // End of searchByName()
 
 // Search by ID 
-function searchByID(people){
+function searchByID(people) {
     let userInput = promptFor("Search by 9 digit ID number, enter the numerical ID below.", idNumber)
-    if(userInput.toLowerCase() === "exit"){
-      return;
+    if (userInput.toLowerCase() === "exit") {
+        return;
     }
     let peopleByID = [];
-    peopleByID = people.filter(function(people){
-        if(people.id == userInput){
+    peopleByID = people.filter(function (people) {
+        if (people.id == userInput) {
             return peopleByID;
         }
     })
@@ -195,62 +208,62 @@ function searchByID(people){
 }
 
 // Search by first OR last name:
-function searchByFirstName(people){
+function searchByFirstName(people) {
     let userInput = promptFor("Please enter person's First Name. *Name must stat with capital letter*", autoValid)
-    if(userInput.toLowerCase() === "exit"){
-      return;
+    if (userInput.toLowerCase() === "exit") {
+        return;
     }
     let peopleByFirstName = [];
-    peopleByFirstName = people.filter(function(people){
-        if(people.firstName == userInput){
+    peopleByFirstName = people.filter(function (people) {
+        if (people.firstName == userInput) {
             return peopleByFirstName;
         }
     })
     let traitGroup = peopleByFirstName;
     displayPeople(traitGroup);
     return traitGroup;
-  }
-  function searchByLastName(people){
+}
+function searchByLastName(people) {
     let userInput = promptFor("Please enter person'd Last Name. *Name must start with capital letter*", autoValid)
-    if(userInput.toLowerCase() === "exit"){
-      return;
+    if (userInput.toLowerCase() === "exit") {
+        return;
     }
     let peopleByLastName = [];
-    peopleByLastName = people.filter(function(people){
-        if(people.lastName == userInput){
+    peopleByLastName = people.filter(function (people) {
+        if (people.lastName == userInput) {
             return peopleByLastName;
         }
     })
     let traitGroup = peopleByLastName;
     displayPeople(traitGroup);
     return traitGroup;
-  }
+}
 // Search by either gender
-function searchByGender(people){
+function searchByGender(people) {
     let userInput = promptFor("Enter a gender.", maleFemale);
-    if(userInput.toLowerCase === "exit"){
-      return;
+    if (userInput.toLowerCase === "exit") {
+        return;
     }
-    if(userInput.toLowerCase() === "male"){
+    if (userInput.toLowerCase() === "male") {
         let men = [];
-        men = people.filter(function(people){
-            if(people.gender === userInput){
+        men = people.filter(function (people) {
+            if (people.gender === userInput) {
                 return men;
             }
         })
         let traitGroup = men;
         return traitGroup;
-    } 
-    else if(userInput.toLowerCase() === "female"){
-      let women = [];
-      women = people.filter(function(people){
-          if(people.gender === userInput){
-              return women;
-          }
-      })
-      let traitGroup = women;
-      displayPeople(traitGroup);
-      return(traitGroup);
+    }
+    else if (userInput.toLowerCase() === "female") {
+        let women = [];
+        women = people.filter(function (people) {
+            if (people.gender === userInput) {
+                return women;
+            }
+        })
+        let traitGroup = women;
+        displayPeople(traitGroup);
+        return (traitGroup);
     }
 }
 
@@ -286,28 +299,28 @@ function displayPerson(person) {
     personInfo += `Weight: ${person.wight}+"lbs" + "\n`;
     personInfo += `Eye Color: ${person.eyeColor}\n`;
     personInfo += `Occupation: ${person.occupation}\n`;
-    
+
     alert(personInfo);
 }
 
-function displayFamily(person){
+function displayFamily(person) {
     let personFamily = `Parents: ${person.parents}\n`;
-        personFamily += `Current Spouse: ${person.currentSpouse}\n`;
+    personFamily += `Current Spouse: ${person.currentSpouse}\n`;
     alert(personFamily);
 }
 
-function displayPersonDescendants(person){
+function displayPersonDescendants(person) {
     let personDescendants = `Decendents: `
 }
 // End of displayPerson()
 
 
 //data validation functions-
-function idNumber(input){
-    if(input.length === 9||input.toLowerCase() == 'exit'){
+function idNumber(input) {
+    if (input.length === 9 || input.toLowerCase() == 'exit') {
         return true;
     }
-    else{
+    else {
         return false;
     }
 }
