@@ -188,39 +188,59 @@ function filterTraits(peopleTraits, people) {
     if (peopleTraitOne === "id") {
         filteredPeople = searchByID(people);
     }
-    if (traitOne === "firstName") {
+    if (peopleTraitOne === "firstName") {
         filteredPeople = searchByFirstName(people);
     }
-    if (traitOne === "lastName") {
+    if (peopleTraitOne === "lastName") {
         filteredPeople = searchByLastName(people);
     }
-    if (traitOne === "gender") {
+    if (peopleTraitOne === "gender") {
         filteredPeople = searchByGender(people);
     }
-    if (traitOne === "dob") {
+    if (peopleTraitOne === "dob") {
         filteredPeople = searchByBirthdate(people);
     }
-    if (traitOne === "height") {
+    if (peopleTraitOne === "height") {
         filteredPeople = searchByHeight(people);
     }
-    if (traitOne === "weight") {
+    if (peopleTraitOne === "weight") {
         filteredPeople = searchByWeight(people);
     }
-    if (traitOne === "eyeColor") {
+    if (peopleTraitOne === "eyeColor") {
         filteredPeople = searchEyeColor(people);
     }
-    if (traitOne === "occupation") {
+    if (peopleTraitOne === "occupation") {
         filteredPeople = searchByOccupation(people);
     }
-    if (traitOne === "parents") {
+    if (peopleTraitOne === "parents") {
         filteredPeople = searchByParents(people);
     }
-    if (traitOne === "currentSpouse") {
+    if (peopleTraitOne === "currentSpouse") {
         filteredPeople = searchBySpouse(people);
     }
     return filteredPeople;
 }
-
+function filterTraitGroup(traitGroup, people){
+    if (traitGroup.length === 1){
+        let person = traitGroup;
+        return mainMenu(person);
+    }
+    if (traitGroup.length > 1){
+        let userInput = promptFor('There are multiple persons that match, would you like to narrow the results? Please choose \"yes\" or \"no\" or \"exit\". *Entering no will restart search*', yesNo).toLowerCase();
+    if (userInput.toLowerCase()=== "yes"){
+        searchByTraits(traitGroup);
+    }
+    if(userInput.toLowerCase()=== "no"){
+        return app(people);
+    }
+    if (userInput.toLowerCase() === "exit") {
+        return;
+      }
+      if (traitGroup.length === 0) {
+        alert("No matches in database based on entered information.")
+      }
+    }
+}
 /**
  * After finding a single person, we pass in the entire person-object that we found,
  * as well as the entire original dataset of people. We need people in order to find
