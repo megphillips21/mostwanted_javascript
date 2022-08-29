@@ -151,7 +151,7 @@ function searchByMultipleTraits(people) {
             mainMenu(person, people);
             return;
         }
-        else if (filteredPeople.length == 0){
+        else if (filteredPeople.length == 0) {
             alert('No person(s) found. Try again.')
             app(people);
             return;
@@ -160,6 +160,25 @@ function searchByMultipleTraits(people) {
     }
 }
 
+function pickNumberOfTraits(numberOfTraits) {
+    numberOfTraits = promptFor('Enter numeric value between 2 - 5 to search for more than one trait.', pickNumberOfTraitsValid);
+    return numberOfTraits;
+}
+function multipleTraitInput(peopleTraits,numberOfTraits){
+    if (numberOfTraits === 0){
+        return;
+    }
+    else{
+        pickTraits(peopleTraits);
+        multipleTraitInput(peopleTraits, numberOfTraits -1);
+        return;
+    }
+}
+function pickTraits(peopleTraits){
+    let peopletrait = promptFor('Please enter a trait from the following:\n"id"\n"first name"\n"last name"\n"gender"\n"dob"\n"weight"\n"eye color"\n"occupation"\n"has parents"\n"has spouse"', multipleTraitsValid)
+    peopleTraits.push(peopletrait);
+    return peopleTraits
+}
 /**
  * After finding a single person, we pass in the entire person-object that we found,
  * as well as the entire original dataset of people. We need people in order to find
@@ -324,6 +343,15 @@ function idNumber(input) {
         return false;
     }
 }
+function pickNumberOfTraitsValid(input) {
+    if (input >= 2 && input <= 5 || input.toLowerCase() == 'exit') {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
 
 /**
  * This function's purpose is twofold:
