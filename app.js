@@ -164,20 +164,60 @@ function pickNumberOfTraits(numberOfTraits) {
     numberOfTraits = promptFor('Enter numeric value between 2 - 5 to search for more than one trait.', pickNumberOfTraitsValid);
     return numberOfTraits;
 }
-function multipleTraitInput(peopleTraits,numberOfTraits){
-    if (numberOfTraits === 0){
+function multipleTraitInput(peopleTraits, numberOfTraits) {
+    if (numberOfTraits === 0) {
         return;
     }
-    else{
+    else {
         pickTraits(peopleTraits);
-        multipleTraitInput(peopleTraits, numberOfTraits -1);
+        multipleTraitInput(peopleTraits, numberOfTraits - 1);
         return;
     }
 }
-function pickTraits(peopleTraits){
+function pickTraits(peopleTraits) {
     let peopletrait = promptFor('Please enter a trait from the following:\n"id"\n"first name"\n"last name"\n"gender"\n"dob"\n"weight"\n"eye color"\n"occupation"\n"has parents"\n"has spouse"', multipleTraitsValid)
     peopleTraits.push(peopletrait);
     return peopleTraits
+}
+
+function filterTraits(peopleTraits, people) {
+    let peopleTraitOne = peopleTraits.shift();
+    let filteredPeople = [];
+    if (peopleTraitOne === "id") {
+        filteredPeople = searchByID(people);
+    }
+    if (traitOne === "firstName") {
+        filteredPeople = searchByFirstName(people);
+    }
+    if (traitOne === "lastName") {
+        filteredPeople = searchByLastName(people);
+    }
+    if (traitOne === "gender") {
+        filteredPeople = searchByGender(people);
+    }
+    if (traitOne === "dob") {
+        filteredPeople = searchByBirthdate(people);
+    }
+    if (traitOne === "height") {
+        filteredPeople = searchByHeight(people);
+    }
+    if (traitOne === "weight") {
+        filteredPeople = searchByWeight(people);
+    }
+    if (traitOne === "eyeColor") {
+        filteredPeople = searchEyeColor(people);
+    }
+    if (traitOne === "occupation") {
+        filteredPeople = searchByOccupation(people);
+    }
+    if (traitOne === "parents") {
+        filteredPeople = searchByParents(people);
+    }
+    if (traitOne === "currentSpouse") {
+        filteredPeople = searchBySpouse(people);
+    }
+    return filteredPeople;
+}
 }
 /**
  * After finding a single person, we pass in the entire person-object that we found,
@@ -351,7 +391,14 @@ function pickNumberOfTraitsValid(input) {
         return false;
     }
 }
-
+function multipleTraitsValid(input) {
+    if (input.toLowerCase() == "exit" || input.toLowerCase() == "id" || input.toLowerCase() == "id number" || input.toLowerCase() == "id #" || input.toLowerCase() == "name" || input.toLowerCase() == "first name" || input.toLowerCase() == "first" || input.toLowerCase() == "last name" || input.toLowerCase() == "family name" || input.toLowerCase() == "surname" || input.toLowerCase() == "gender" || input.toLowerCase() == "sex" || input.toLowerCase() == "date of birth" || input.toLowerCase() == "dob" || input.toLowerCase() == "height" || input.toLowerCase() == "weight" || input.toLowerCase() == "lbs" || input.toLowerCase() == "eye color" || input.toLowerCase() == "eyes" || input.toLowerCase() == "occupation" || input.toLowerCase() == "job" || input.toLowerCase() == "profession" || input.toLowerCase() == "parents" || input.toLowerCase() == "has parents" || input.toLowerCase() == "has spouse" || input.toLowerCase() == "spouse" || input.toLowerCase() == "married") {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
 
 /**
  * This function's purpose is twofold:
